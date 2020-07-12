@@ -21,12 +21,12 @@ namespace webBackend.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<Answer> Create([FromQuery] AnswerModel answerModel)
+        public async Task<Answern> Create([FromQuery] AnswerModel answerModel)
         {
             return await _answerService.Create(answerModel);
         }
         [HttpGet("get")]
-        public async Task<Answer> Get(string id)
+        public async Task<Answern> Get(string id)
         {
             var answer = await _answerService.GetById(id);
             return answer;
@@ -38,7 +38,7 @@ namespace webBackend.Controllers
             return answer;
         }
         [HttpDelete("delete")]
-        public async Task<Answer> Delete(string id)
+        public async Task<Answern> Delete(string id)
         {
             var answer = await _answerService.Delete(id);
             return answer;

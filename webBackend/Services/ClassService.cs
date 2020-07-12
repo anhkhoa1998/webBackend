@@ -53,5 +53,6 @@ namespace webBackend.Services
             await _classes.DeleteOneAsync(p => p.Id == id);
             return classs;
         }
+        
     }
 }

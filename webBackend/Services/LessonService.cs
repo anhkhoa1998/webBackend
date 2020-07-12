@@ -16,7 +16,7 @@ namespace webBackend.Services
         Task<LessonUpdateModel> Update(string id, LessonUpdateModel p);
         Task<Lesson> Delete(string id);
     }
-    public class LessonService
+    public class LessonService : ILessonService
     {
         private readonly IMongoCollection<Lesson> _lesson;
         private readonly IMongoDatabase database;

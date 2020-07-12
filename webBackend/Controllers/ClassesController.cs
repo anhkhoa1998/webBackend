@@ -11,7 +11,6 @@ using webBackend.Services;
 namespace webBackend.Controllers
 {
     [Route("api/v1/[controller]")]
-    [Authorize]
     [ApiController]
     public class ClassesController : ControllerBase
     {

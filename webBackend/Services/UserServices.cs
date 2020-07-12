@@ -3,6 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualBasic;
 using MongoDB.Driver;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -22,6 +23,8 @@ namespace webBackend.Services
         User Authenticate(AuthenModel authenModel);
         Task<UserUpdateModel> Update(string id, UserUpdateModel p);
         Task<User> Delete(string id);
+        Task<List<string>> GetListClass(string id);
+        Task<UserInformation> GetUserInformation(string userId);
 
     }
     public class UserServices : IUserServices
@@ -68,7 +71,7 @@ namespace webBackend.Services
             var token = tokenHandler.CreateToken(tokenDescriptor);
             user.Token = tokenHandler.WriteToken(token);
 
-            return user.WithoutPassword();
+            return user;
         }
         public Task<User> GetById(string id)
         {
@@ -86,6 +89,20 @@ namespace webBackend.Services
             var user = await GetById(id);
             await _users.DeleteOneAsync(p => p.Id == id);
             return user;
+        }
+        public async Task<List<string>> GetListClass(string id)
+        {
+            var user = await _users.Find(u => u.Id == id).FirstOrDefaultAsync();
+            return user.ListClass;
+        }
+
+        public async Task<UserInformation> GetUserInformation(string userId)
+        {
+            var user = await _users.Find(u => u.Id == userId).FirstOrDefaultAsync();
+            var result = new UserInformation { FirstName = user.FirstName, LastName = user.LastName, ListClass = user.ListClass };
+
+
+            return result;
         }
     }
 }
