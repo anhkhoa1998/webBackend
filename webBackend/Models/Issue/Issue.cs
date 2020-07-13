@@ -15,6 +15,6 @@ namespace webBackend.Models.Issue
         public string Question { get; set; }
         [BsonRepresentation(BsonType.ObjectId)]
         public string UserId { get; set; }
-        public List<Answern> Answers { get; set; }
+      //  public List<Answern> Answers { get; set; }
     }
 }

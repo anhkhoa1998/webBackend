@@ -15,6 +15,7 @@ namespace webBackend.Services
         Task<Class> Create(ClassModel classModel);
         Task<ClassUpdateModel> Update(string id, ClassUpdateModel p);
         Task<Class> Delete(string id);
+        Task<List<Class>> GetListClassById(List<string> IdClass);
     }
     public class ClassService : IClassService
     {
@@ -53,6 +54,17 @@ namespace webBackend.Services
             await _classes.DeleteOneAsync(p => p.Id == id);
             return classs;
         }
+        public async Task<List<Class>> GetListClassById(List<string> IdClass)
+        {
+            List<Class> ListClass = new List<Class>();
+            foreach(string Id in IdClass)
+            {
+                var classs = await GetById(Id);
+                ListClass.Add(classs);
+            }
+            return ListClass;
+        }
         
+
     }
 }
