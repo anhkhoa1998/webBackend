@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using webBackend.Models.Answer;
 using webBackend.Models.Issue;
 using webBackend.Services;
 
@@ -14,10 +15,12 @@ namespace webBackend.Controllers
     public class IssuesController : ControllerBase
     {
         private readonly IssueService _issueService;
+        private readonly AnswerService _answerService;
 
-        public IssuesController(IssueService issueService)
+        public IssuesController(IssueService issueService, AnswerService answerService)
         {
             _issueService = issueService;
+            _answerService = answerService;
         }
 
         [HttpPost("create")]
@@ -43,5 +46,28 @@ namespace webBackend.Controllers
             var issue = await _issueService.Delete(id);
             return issue;
         }
+        [HttpGet("getbylist")]
+        public IActionResult GetByChapterID(string id)
+        {
+            List<Issue> issues = _issueService.GetByChapterID(id);
+            return Ok(issues);
+        }
+        [HttpPost("createanswer")]
+        public IActionResult CreateAnser(string issueId,string conten)
+        {
+            AnswerModel answern = new AnswerModel();
+            var issue = _issueService.GetId(issueId);
+            if(issue==null)
+            {
+                return BadRequest();
+            }
+            answern.Content = conten;
+            answern.IssueId = issue.Id;
+            answern.UserId = issue.UserId;
+            _answerService.Create(answern);
+            return Ok(answern);
+
+        }
+
     }
 }

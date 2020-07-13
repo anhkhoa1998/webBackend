@@ -14,5 +14,6 @@ namespace webBackend.Models.Lesson
         public string Id { get; set; }
         public int No { get; set; }
         public string Name { get; set; }
+        public string ClassId { get; set; }
     }
 }

@@ -6938,11 +6938,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Liem\\Desktop\\BE\\webBackend\\webBackend\\webBackend.csproj",
+      "projectUniqueName": "C:\\Users\\Liem\\Desktop\\BackEnd\\webBackend\\webBackend\\webBackend.csproj",
       "projectName": "webBackend",
-      "projectPath": "C:\\Users\\Liem\\Desktop\\BE\\webBackend\\webBackend\\webBackend.csproj",
+      "projectPath": "C:\\Users\\Liem\\Desktop\\BackEnd\\webBackend\\webBackend\\webBackend.csproj",
       "packagesPath": "C:\\Users\\Liem\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Liem\\Desktop\\BE\\webBackend\\webBackend\\obj\\",
+      "outputPath": "C:\\Users\\Liem\\Desktop\\BackEnd\\webBackend\\webBackend\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

@@ -15,6 +15,7 @@ namespace webBackend.Services
         Task<Lesson> Create(LessonModel lessonModel);
         Task<LessonUpdateModel> Update(string id, LessonUpdateModel p);
         Task<Lesson> Delete(string id);
+        List<Lesson> GetByClassId(string id);
     }
     public class LessonService : ILessonService
     {
@@ -52,6 +53,13 @@ namespace webBackend.Services
             var lesson = await GetById(id);
             await _lesson.DeleteOneAsync(p => p.Id == id);
             return lesson;
+        }
+        public List<Lesson> GetByClassId(string id)
+        {
+            List<Lesson> list =  _lesson.Find(b => b.ClassId == id).ToList();
+            list.OrderBy(b => b.No);
+            return list;
+
         }
     }
 }
