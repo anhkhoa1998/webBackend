@@ -64,6 +64,10 @@ namespace webBackend
           });
             services.AddSingleton<UserServices>();
             services.AddSingleton<ClassService>();
+            services.AddSingleton<LessonService>();
+            services.AddSingleton<ChapterService>();
+            services.AddSingleton<IssueService>();
+            services.AddSingleton<AnswerService>();
 
             services.AddSwaggerGen(c =>
             {

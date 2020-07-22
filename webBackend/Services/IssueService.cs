@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MongoDB.Driver;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using webBackend.Models;
 using webBackend.Models.Issue;
@@ -12,6 +13,8 @@ namespace webBackend.Services
         Task<Issue> Create(IssueModel issueModel);
         Task<IssueUpdateModel> Update(string id, IssueUpdateModel p);
         Task<Issue> Delete(string id);
+        List<Issue> GetByChapterID(string id);
+        Issue GetId(string id);
     }
     public class IssueService
     {
@@ -26,6 +29,10 @@ namespace webBackend.Services
 
             _issues = database.GetCollection<Issue>(settings.IssuesCollectionName);
             _mapper = mapper;
+        }
+        public Issue GetId(string id)
+        {
+            return _issues.Find(x => x.Id == id).FirstOrDefault();
         }
         public Task<Issue> GetById(string id)
         {
@@ -49,6 +56,11 @@ namespace webBackend.Services
             var issue = await GetById(id);
             await _issues.DeleteOneAsync(p => p.Id == id);
             return issue;
+        }
+        public List<Issue> GetByChapterID(string id)
+        {
+            List<Issue> list = _issues.Find(x => x.ChapterId == id).ToList();
+            return list;
         }
     }
 }

@@ -15,6 +15,7 @@ namespace webBackend.Services
         Task<Answern> Create(AnswerModel answerModel);
         Task<AnswerUpdateModel> Update(string id, AnswerUpdateModel p);
         Task<Answern> Delete(string id);
+        List<Answern> GetListByIssueId(string id);
     }
     public class AnswerService : IAnswerService
     {
@@ -52,6 +53,11 @@ namespace webBackend.Services
             var answer = await GetById(id);
             await _answers.DeleteOneAsync(p => p.Id == id);
             return answer;
+        }
+        public List<Answern> GetListByIssueId(string id)
+        {
+            List<Answern> answerns = _answers.Find(x => x.IssueId == id).ToList();
+            return answerns;
         }
     }
 }

@@ -16,6 +16,6 @@ namespace webBackend.Models.Chapter
         public string Code { get; set; }
         public int No { get; set; }
         [BsonRepresentation(BsonType.ObjectId)]
-        public string ClassId { get; set; }
+        public string LessonId { get; set; }
     }
 }

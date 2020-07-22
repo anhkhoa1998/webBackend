@@ -9,5 +9,6 @@ namespace webBackend.Models.Lesson
     {
         public string No { get; set; }
         public string Name { get; set; }
+        public string ClassId { get; set; }
     }
 }

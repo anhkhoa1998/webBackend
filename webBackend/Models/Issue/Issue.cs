@@ -12,9 +12,10 @@ namespace webBackend.Models.Issue
         public string Id { get; set; }
         [BsonRepresentation(BsonType.ObjectId)]
         public string ClassId { get; set; }
+        public string ChapterId { get; set; }
         public string Question { get; set; }
         [BsonRepresentation(BsonType.ObjectId)]
         public string UserId { get; set; }
-        public List<Answern> Answers { get; set; }
+      //  public List<Answern> Answers { get; set; }
     }
 }

@@ -15,6 +15,7 @@ namespace webBackend.Services
         Task<Chapter> Create(ChapterModel chapterModel);
         Task<ChapterUpdateModel> Update(string id, ChapterUpdateModel p);
         Task<Chapter> Delete(string id);
+        List<Chapter> GetListByLessonId(string id);
     }
     public class ChapterService: IChapterService
     {
@@ -52,6 +53,12 @@ namespace webBackend.Services
             var chapter = await GetById(id);
             await _chapters.DeleteOneAsync(p => p.Id == id);
             return chapter;
+        }
+        public List<Chapter> GetListByLessonId(string id)
+        {
+            List<Chapter> list = _chapters.Find(b => b.LessonId == id).ToList();
+            list.OrderBy(b => b.No);
+            return list;
         }
     }
 }
