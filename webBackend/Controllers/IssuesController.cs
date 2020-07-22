@@ -46,13 +46,13 @@ namespace webBackend.Controllers
             var issue = await _issueService.Delete(id);
             return issue;
         }
-        [HttpGet("getbylist")]
+        [HttpGet("get-list-issue")]
         public IActionResult GetByChapterID(string id)
         {
             List<Issue> issues = _issueService.GetByChapterID(id);
             return Ok(issues);
         }
-        [HttpPost("createanswer")]
+        [HttpPost("create-answer")]
         public IActionResult CreateAnser(string issueId,string conten)
         {
             AnswerModel answern = new AnswerModel();

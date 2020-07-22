@@ -43,7 +43,7 @@ namespace webBackend.Controllers
             var answer = await _answerService.Delete(id);
             return answer;
         }
-        [HttpGet("gelist")]
+        [HttpGet("get-list-answer")]
         public IActionResult GetByIssueId(string id)
         {
             List<Answern> answerns = _answerService.GetListByIssueId(id);
