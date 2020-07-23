@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using webBackend.Models;
 using webBackend.Models.Class;
+using webBackend.Models.User;
 
 namespace webBackend.Services
 {
@@ -15,11 +16,12 @@ namespace webBackend.Services
         Task<Class> Create(ClassModel classModel);
         Task<ClassUpdateModel> Update(string id, ClassUpdateModel p);
         Task<Class> Delete(string id);
-        Task<List<Class>> GetListClassById(List<string> IdClass);
+        Task<List<Class>> GetListClassById(string userId);
     }
     public class ClassService : IClassService
     {
         private readonly IMongoCollection<Class> _classes;
+        private readonly IMongoCollection<User> _users;
         private readonly IMongoDatabase database;
         private readonly IMapper _mapper;
 
@@ -29,6 +31,7 @@ namespace webBackend.Services
             database = client.GetDatabase(settings.DatabaseName);
 
             _classes = database.GetCollection<Class>(settings.ClassesCollectionName);
+            _users = database.GetCollection<User>(settings.UsersCollectionName);
             _mapper = mapper;
         }
         public Task<Class> GetById(string id)
@@ -54,15 +57,16 @@ namespace webBackend.Services
             await _classes.DeleteOneAsync(p => p.Id == id);
             return classs;
         }
-        public async Task<List<Class>> GetListClassById(List<string> IdClass)
+        public async Task<List<Class>> GetListClassById(string userId)
         {
-            List<Class> ListClass = new List<Class>();
-            foreach(string Id in IdClass)
+            var user = await _users.Find(u => u.Id == userId).FirstOrDefaultAsync();
+            var listResult = new List<Class>();
+            foreach(string Id in user.ListClass)
             {
                 var classs = await GetById(Id);
-                ListClass.Add(classs);
+                listResult.Add(classs);
             }
-            return ListClass;
+            return listResult;
         }
         
 

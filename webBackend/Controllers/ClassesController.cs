@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -34,10 +35,18 @@ namespace webBackend.Controllers
             return classs;
         }
 
-        [HttpPost("getlist")]
-        public async Task<List<Class>> GetListClass(List<string> Id)
+        [HttpGet("get-list-class")]
+        public async Task<List<Class>> GetListClass()
         {
-            var list = await _classService.GetListClassById(Id);
+            var userId = string.Empty;
+            var role = string.Empty;
+            if (HttpContext.User.Identity is ClaimsIdentity identity)
+            {
+                userId = identity.FindFirst(ClaimTypes.Name)?.Value;
+                role = identity.FindFirst(ClaimTypes.Role)?.Value;
+            }
+
+            var list = await _classService.GetListClassById(userId);
             return list;
         }
 
