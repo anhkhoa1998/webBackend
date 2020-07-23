@@ -8,12 +8,14 @@
         public string IssuesCollectionName { get; set; }
         public string LessonsCollectionName { get; set; }
         public string ChaptersCollectionName { get; set; }
+        public string GroupsCollectionName { get; set; }
         public string ConnectionString { get; set; }
         public string DatabaseName { get; set; }
         public string Secret { get; set; }
     }
     public interface IAppSettings
     {
+        string GroupsCollectionName { get; set; }
         string UsersCollectionName { get; set; }
         string ClassesCollectionName { get; set; }
         string AnswersCollectionName { get; set; }
