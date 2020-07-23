@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Liem\\Desktop\\BackEnd\\webBackend\\webBackend\\webBackend.csproj": {}
+    "C:\\Users\\anhkhoa\\Desktop\\go-upclass\\backend\\webBackend\\webBackend\\webBackend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Liem\\Desktop\\BackEnd\\webBackend\\webBackend\\webBackend.csproj": {
+    "C:\\Users\\anhkhoa\\Desktop\\go-upclass\\backend\\webBackend\\webBackend\\webBackend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Liem\\Desktop\\BackEnd\\webBackend\\webBackend\\webBackend.csproj",
+        "projectUniqueName": "C:\\Users\\anhkhoa\\Desktop\\go-upclass\\backend\\webBackend\\webBackend\\webBackend.csproj",
         "projectName": "webBackend",
-        "projectPath": "C:\\Users\\Liem\\Desktop\\BackEnd\\webBackend\\webBackend\\webBackend.csproj",
-        "packagesPath": "C:\\Users\\Liem\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Liem\\Desktop\\BackEnd\\webBackend\\webBackend\\obj\\",
+        "projectPath": "C:\\Users\\anhkhoa\\Desktop\\go-upclass\\backend\\webBackend\\webBackend\\webBackend.csproj",
+        "packagesPath": "C:\\Users\\anhkhoa\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\anhkhoa\\Desktop\\go-upclass\\backend\\webBackend\\webBackend\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Liem\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\anhkhoa\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -88,7 +85,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
         }
       }
     }

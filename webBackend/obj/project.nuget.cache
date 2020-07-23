@@ -2,7 +2,7 @@
   "version": 2,
   "dgSpecHash": "jYrP6oOuAhVVWVu7GGxYSMyl7BoMhl3uc1dVuC3opmzHsQ2y5pAs9az5bEC21oNPVM7weJaUndFPHs1MNqFAqQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Liem\\Desktop\\BackEnd\\webBackend\\webBackend\\webBackend.csproj",
+  "projectFilePath": "C:\\Users\\anhkhoa\\Desktop\\go-upclass\\backend\\webBackend\\webBackend\\webBackend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\anhkhoa\\.nuget\\packages\\automapper\\9.0.0\\automapper.9.0.0.nupkg.sha512",
     "C:\\Users\\anhkhoa\\.nuget\\packages\\automapper.collection\\6.0.0\\automapper.collection.6.0.0.nupkg.sha512",

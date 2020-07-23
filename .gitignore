@@ -284,3 +284,4 @@ webBackend/obj/project.assets.json
 webBackend/obj/project.nuget.cache
 webBackend/obj/webBackend.csproj.nuget.dgspec.json
 webBackend/obj/webBackend.csproj.nuget.g.props
+webBackend/obj/Debug/netcoreapp3.1/webBackend.csproj.CoreCompileInputs.cache
