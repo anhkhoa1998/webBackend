@@ -21,7 +21,7 @@ namespace webBackend.Services
     public class ClassService : IClassService
     {
         private readonly IMongoCollection<Class> _classes;
-        private readonly IMongoCollection<User> _users;
+        private readonly IMongoCollection<webBackend.Models.User.User> _users;
         private readonly IMongoDatabase database;
         private readonly IMapper _mapper;
 

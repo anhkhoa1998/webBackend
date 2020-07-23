@@ -18,18 +18,18 @@ namespace webBackend.Services
 {
     public interface IUserServices
     {
-        Task<Users> GetById(string id);
-        Task<Users> Create(UserModel userModel);
-        Users Authenticate(AuthenModel authenModel);
+        Task<User> GetById(string id);
+        Task<User> Create(UserModel userModel);
+        User Authenticate(AuthenModel authenModel);
         Task<UserUpdateModel> Update(string id, UserUpdateModel p);
-        Task<Users> Delete(string id);
+        Task<User> Delete(string id);
         Task<List<string>> GetListClass(string id);
         Task<UserInformation> GetUserInformation(string userId);
 
     }
     public class UserServices : IUserServices
     {
-        private readonly IMongoCollection<Users> _users;
+        private readonly IMongoCollection<User> _user;
         private readonly IMongoDatabase database;
         private readonly IMapper _mapper;
         private readonly AppSettings _appSettings;
@@ -40,20 +40,20 @@ namespace webBackend.Services
             database = client.GetDatabase(settings.DatabaseName);
 
             _appSettings = settings;
-            _users = database.GetCollection<Users>(settings.UsersCollectionName);
+            _user = database.GetCollection<User>(settings.UsersCollectionName);
             _mapper = mapper;
         }
 
-        public async Task<Users> Create(UserModel userModel)
+        public async Task<User> Create(UserModel userModel)
         {
-            var user = _mapper.Map<Users>(userModel);
-            await _users.InsertOneAsync(user);
+            var user = _mapper.Map<User>(userModel);
+            await _user.InsertOneAsync(user);
             return user;
         }
 
-        public Users Authenticate(AuthenModel authenModel)
+        public User Authenticate(AuthenModel authenModel)
         {
-            var user = _users.Find(b => b.Username == authenModel.Username && b.Password == authenModel.Password).FirstOrDefault();
+            var user = _user.Find(b => b.Username == authenModel.Username && b.Password == authenModel.Password).FirstOrDefault();
             if (user == null) return null;
             // authentication successful so generate jwt token
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
@@ -73,32 +73,32 @@ namespace webBackend.Services
 
             return user;
         }
-        public Task<Users> GetById(string id)
+        public Task<User> GetById(string id)
         {
-            return _users.Find(p => p.Id == id).FirstOrDefaultAsync();
+            return _user.Find(p => p.Id == id).FirstOrDefaultAsync();
         }
         public async Task<UserUpdateModel> Update(string id, UserUpdateModel p)
         {
             var user = await GetById(id);
             _mapper.Map(p, user);
-            await _users.ReplaceOneAsync(p => p.Id == id, user);
+            await _user.ReplaceOneAsync(p => p.Id == id, user);
             return p;
         }
-        public async Task<Users> Delete(string id)
+        public async Task<User> Delete(string id)
         {
             var user = await GetById(id);
-            await _users.DeleteOneAsync(p => p.Id == id);
+            await _user.DeleteOneAsync(p => p.Id == id);
             return user;
         }
         public async Task<List<string>> GetListClass(string id)
         {
-            var user = await _users.Find(u => u.Id == id).FirstOrDefaultAsync();
+            var user = await _user.Find(u => u.Id == id).FirstOrDefaultAsync();
             return user.ListClass;
         }
 
         public async Task<UserInformation> GetUserInformation(string userId)
         {
-            var user = await _users.Find(u => u.Id == userId).FirstOrDefaultAsync();
+            var user = await _user.Find(u => u.Id == userId).FirstOrDefaultAsync();
             var result = new UserInformation { FirstName = user.FirstName, LastName = user.LastName, ListClass = user.ListClass };
 
 

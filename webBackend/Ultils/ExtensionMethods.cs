@@ -8,12 +8,12 @@ namespace webBackend.Ultils
 {
     public static class ExtensionMethods
     {
-        public static IEnumerable<Users> WithoutPasswords(this IEnumerable<Users> users)
+        public static IEnumerable<User> WithoutPasswords(this IEnumerable<User> users)
         {
             return users.Select(x => x.WithoutPassword());
         }
 
-        public static Users WithoutPassword(this Users user)
+        public static User WithoutPassword(this User user)
         {
             user.Password = null;
             return user;
