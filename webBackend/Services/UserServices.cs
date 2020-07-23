@@ -18,18 +18,18 @@ namespace webBackend.Services
 {
     public interface IUserServices
     {
-        Task<User> GetById(string id);
-        Task<User> Create(UserModel userModel);
-        User Authenticate(AuthenModel authenModel);
+        Task<Users> GetById(string id);
+        Task<Users> Create(UserModel userModel);
+        Users Authenticate(AuthenModel authenModel);
         Task<UserUpdateModel> Update(string id, UserUpdateModel p);
-        Task<User> Delete(string id);
+        Task<Users> Delete(string id);
         Task<List<string>> GetListClass(string id);
         Task<UserInformation> GetUserInformation(string userId);
 
     }
     public class UserServices : IUserServices
     {
-        private readonly IMongoCollection<User> _users;
+        private readonly IMongoCollection<Users> _users;
         private readonly IMongoDatabase database;
         private readonly IMapper _mapper;
         private readonly AppSettings _appSettings;
@@ -40,18 +40,18 @@ namespace webBackend.Services
             database = client.GetDatabase(settings.DatabaseName);
 
             _appSettings = settings;
-            _users = database.GetCollection<User>(settings.UsersCollectionName);
+            _users = database.GetCollection<Users>(settings.UsersCollectionName);
             _mapper = mapper;
         }
 
-        public async Task<User> Create(UserModel userModel)
+        public async Task<Users> Create(UserModel userModel)
         {
-            var user = _mapper.Map<User>(userModel);
+            var user = _mapper.Map<Users>(userModel);
             await _users.InsertOneAsync(user);
             return user;
         }
 
-        public User Authenticate(AuthenModel authenModel)
+        public Users Authenticate(AuthenModel authenModel)
         {
             var user = _users.Find(b => b.Username == authenModel.Username && b.Password == authenModel.Password).FirstOrDefault();
             if (user == null) return null;
@@ -73,7 +73,7 @@ namespace webBackend.Services
 
             return user;
         }
-        public Task<User> GetById(string id)
+        public Task<Users> GetById(string id)
         {
             return _users.Find(p => p.Id == id).FirstOrDefaultAsync();
         }
@@ -84,7 +84,7 @@ namespace webBackend.Services
             await _users.ReplaceOneAsync(p => p.Id == id, user);
             return p;
         }
-        public async Task<User> Delete(string id)
+        public async Task<Users> Delete(string id)
         {
             var user = await GetById(id);
             await _users.DeleteOneAsync(p => p.Id == id);

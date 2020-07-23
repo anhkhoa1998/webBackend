@@ -21,13 +21,13 @@ namespace webBackend.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<User> Create([FromQuery] UserModel userModel)
+        public async Task<Users> Create([FromQuery] UserModel userModel)
         {
             return await _userService.Create(userModel);
         }
         [AllowAnonymous]
         [HttpPost("authen")]
-        public User Authentication(AuthenModel authenModel)
+        public Users Authentication(AuthenModel authenModel)
         {
             return _userService.Authenticate(authenModel);
         }
