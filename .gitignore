@@ -273,3 +273,14 @@ __pycache__/
 # tools/
 
 # End of https://www.toptal.com/developers/gitignore/api/aspnetcore
+.vs/webBackend/DesignTimeBuild/.dtbcache.v2
+.vs/webBackend/DesignTimeBuild/.dtbcache.v2
+.vs/webBackend/v16/.suo
+webBackend/obj/Debug/netcoreapp3.1/webBackend.assets.cache
+webBackend/obj/Debug/netcoreapp3.1/webBackend.csproj.CoreCompileInputs.cache
+webBackend/obj/Debug/netcoreapp3.1/webBackend.csprojAssemblyReference.cache
+webBackend/obj/Debug/netcoreapp3.1/webBackend.exe
+webBackend/obj/project.assets.json
+webBackend/obj/project.nuget.cache
+webBackend/obj/webBackend.csproj.nuget.dgspec.json
+webBackend/obj/webBackend.csproj.nuget.g.props
