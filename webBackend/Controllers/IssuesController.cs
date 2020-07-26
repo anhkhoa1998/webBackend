@@ -52,22 +52,22 @@ namespace webBackend.Controllers
             List<Issue> issues = _issueService.GetByChapterID(id);
             return Ok(issues);
         }
-        [HttpPost("createanswer")]
-        public IActionResult CreateAnser(string issueId,string conten)
-        {
-            AnswerModel answern = new AnswerModel();
-            var issue = _issueService.GetId(issueId);
-            if(issue==null)
-            {
-                return BadRequest();
-            }
-            answern.Content = conten;
-            answern.IssueId = issue.Id;
-            answern.UserId = issue.UserId;
-            _answerService.Create(answern);
-            return Ok(answern);
+        //[HttpPost("createanswer")]
+        //public IActionResult CreateAnser(string issueId,string conten)
+        //{
+        //    AnswerModel answern = new AnswerModel();
+        //    var issue = _issueService.GetId(issueId);
+        //    if(issue==null)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    answern.Content = conten;
+        //    answern.IssueId = issue.Id;
+        //    answern.UserId = issue.UserId;
+        //    _answerService.Create(answern);
+        //    return Ok(answern);
 
-        }
+        //}
 
     }
 }

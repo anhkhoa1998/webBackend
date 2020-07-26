@@ -12,7 +12,9 @@ namespace webBackend.Models.Group
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
         public string Name { get; set; }
-        public List<Users> ListUser { get; set; }
-        public Groups() { this.ListUser = new List<Users>(); }
+        public string ClassId { get; set; }
+        public List<webBackend.Models.User.User> ListUser { get; set; }
+        public Groups() { this.ListUser = new List<webBackend.Models.User.User>(); }
+        
     }
 }

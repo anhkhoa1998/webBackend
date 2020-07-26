@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using webBackend.Models.Answer;
 using webBackend.Models.Chapter;
 using webBackend.Models.Class;
+using webBackend.Models.Group;
 using webBackend.Models.Issue;
 using webBackend.Models.Lesson;
+using webBackend.Models.Result;
 using webBackend.Models.User;
 
 namespace webBackend.Ultils
@@ -18,10 +20,10 @@ namespace webBackend.Ultils
         {
             CreateMap<UserModel, User>();
             CreateMap<UserUpdateModel, User>();
-
+            CreateMap<Groups, GroupResult>();
             CreateMap<ClassModel, Class>();
             CreateMap<ClassUpdateModel, Class>();
-
+            CreateMap<Class, ClassResult>();
             CreateMap<LessonModel, Lesson>();
             CreateMap<LessonUpdateModel, Lesson>();
 

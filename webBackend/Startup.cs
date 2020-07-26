@@ -68,6 +68,9 @@ namespace webBackend
             services.AddSingleton<ChapterService>();
             services.AddSingleton<IssueService>();
             services.AddSingleton<AnswerService>();
+            services.AddSingleton<GroupService>();
+            services.AddSingleton<QuestionService>();
+            services.AddSingleton<ScheduleService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });

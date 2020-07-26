@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using webBackend.Models.Class;
+using webBackend.Models.Result;
 using webBackend.Services;
 
 namespace webBackend.Controllers
@@ -35,19 +36,11 @@ namespace webBackend.Controllers
             return classs;
         }
 
-        [HttpGet("get-list-class")]
-        public async Task<List<Class>> GetListClass()
+        [HttpGet("get-user-result")]
+        public async Task<UserInformationResult> GetResult(string id)
         {
-            var userId = string.Empty;
-            var role = string.Empty;
-            if (HttpContext.User.Identity is ClaimsIdentity identity)
-            {
-                userId = identity.FindFirst(ClaimTypes.Name)?.Value;
-                role = identity.FindFirst(ClaimTypes.Role)?.Value;
-            }
-
-            var list = await _classService.GetListClassById(userId);
-            return list;
+            var Result = _classService.GetListClassById(id);
+            return Result;
         }
 
         [HttpPut("update")]
