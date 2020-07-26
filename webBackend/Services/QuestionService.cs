@@ -8,13 +8,14 @@ using webBackend.Models;
 using webBackend.Models.Answer;
 using webBackend.Models.Group;
 using webBackend.Models.Question;
+using webBackend.Models.User;
 
 namespace webBackend.Services
 {
     public interface IQuestionService
     {
 
-        Task<Question> Create(QuestionModel answerModel);
+        Task<Question> Create(QuestionModel answerModel, string userId);
         List<QuestionResult> GetById(string lessonId);
         List<Question> Get();
         ResultQuestion CountQuestion(string id);
@@ -24,6 +25,7 @@ namespace webBackend.Services
     {
         private readonly IMongoCollection<Question> _question;
         private readonly IMongoCollection<Groups> _group;
+        private readonly IMongoCollection<User> _users;
         private readonly IMongoDatabase database;
         private readonly IMapper _mapper;
         public QuestionService(AppSettings settings, IMapper mapper)
@@ -33,14 +35,17 @@ namespace webBackend.Services
 
             _question = database.GetCollection<Question>(settings.QuestionCollectionName);
             _group = database.GetCollection<Groups>(settings.GroupsCollectionName);
+            _users = database.GetCollection<User>(settings.UsersCollectionName);
             _mapper = mapper;
         }
-        public async Task<Question> Create(QuestionModel answerModel)
+        public async Task<Question> Create(QuestionModel answerModel, string userId)
         {
+            var user = _users.Find(u => u.Id == userId).FirstOrDefault();
+            var group = _group.Find(g => g.ListUser.Contains(user) && g.ClassId == answerModel.ClassId).FirstOrDefault();
             Question question = new Question();
             question.LessonId = answerModel.LessonId;
             question.Content = answerModel.Content;
-            question.GroupId = answerModel.GroupId;
+            question.GroupId = group.Id;
             question.CreateAt = DateTime.Now;
             _question.InsertOne(question);
             return question;

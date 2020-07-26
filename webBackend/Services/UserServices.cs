@@ -90,19 +90,5 @@ namespace webBackend.Services
             await _user.DeleteOneAsync(p => p.Id == id);
             return user;
         }
-        //public async Task<List<string>> GetListClass(string id)
-        //{
-        //    var user = await _user.Find(u => u.Id == id).FirstOrDefaultAsync();
-        //    return user.ListClass;
-        //}
-
-        //public async Task<UserInformation> GetUserInformation(string userId)
-        //{
-        //    var user = await _user.Find(u => u.Id == userId).FirstOrDefaultAsync();
-        //    var result = new UserInformation { FirstName = user.FirstName, LastName = user.LastName, ListClass = user.ListClass };
-
-
-        //    return result;
-        //}
     }
 }

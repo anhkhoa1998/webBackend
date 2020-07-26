@@ -77,13 +77,13 @@ namespace webBackend.Services
         {
             var user = _users.Find(u => u.Id == userId).FirstOrDefault();
 
-            var groups = _groups.Find(g =>true).ToList();
+            var groups = _groups.Find(g => true).ToList();
             List<Groups> Listgroups = new List<Groups>();
-            foreach(Groups item in groups)
+            foreach (Groups item in groups)
             {
-                for(int i=0;i<item.ListUser.Count;i++)
+                for (int i = 0; i < item.ListUser.Count; i++)
                 {
-                    if(item.ListUser[i].Id==userId)
+                    if (item.ListUser[i].Id == userId)
                     {
                         Listgroups.Add(item);
                     }
@@ -91,7 +91,7 @@ namespace webBackend.Services
             }
             var groupResults = _mapper.Map<List<Groups>, List<GroupResult>>(Listgroups);
             List<string> classId = new List<string>();
-            foreach(Groups item in Listgroups)
+            foreach (Groups item in Listgroups)
             {
                 classId.Add(item.ClassId);
             }

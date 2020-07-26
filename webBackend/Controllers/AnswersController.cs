@@ -24,9 +24,16 @@ namespace webBackend.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<Answern> Create([FromQuery] AnswerModel answerModel,string id)
+        public async Task<Answer> Create(AnswerModel answerModel)
         {
-            return await _answerService.Create(answerModel,id);
+            var userId = string.Empty;
+            var role = string.Empty;
+            if (HttpContext.User.Identity is ClaimsIdentity identity)
+            {
+                userId = identity.FindFirst(ClaimTypes.Name)?.Value;
+                role = identity.FindFirst(ClaimTypes.Role)?.Value;
+            }
+            return await _answerService.Create(answerModel, userId);
         }
         [HttpGet("get")]
         public async Task<Answer> Get(string id)
@@ -45,12 +52,6 @@ namespace webBackend.Controllers
         {
             var answer = await _answerService.Delete(id);
             return answer;
-        }
-        [HttpGet("get-list-answer")]
-        public IActionResult GetByLessonId(string id)
-        {
-            var answerns = _answerService.GetListQuestionAndAnswer(chapterId);
-            return Ok(answerns);
         }
         [HttpGet("count-answer")]
         public IActionResult GetCount(string groupId)

@@ -37,9 +37,16 @@ namespace webBackend.Controllers
         }
 
         [HttpGet("get-user-result")]
-        public async Task<UserInformationResult> GetResult(string id)
+        public async Task<UserInformationResult> GetResult()
         {
-            var Result = _classService.GetListClassById(id);
+            var userId = string.Empty;
+            var role = string.Empty;
+            if (HttpContext.User.Identity is ClaimsIdentity identity)
+            {
+                userId = identity.FindFirst(ClaimTypes.Name)?.Value;
+                role = identity.FindFirst(ClaimTypes.Role)?.Value;
+            }
+            var Result = _classService.GetListClassById(userId);
             return Result;
         }
 

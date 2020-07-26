@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -10,7 +11,7 @@ using webBackend.Services;
 
 namespace webBackend.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class QuestionController : ControllerBase
     {
@@ -23,12 +24,19 @@ namespace webBackend.Controllers
             _groupService = groupService;
         }
 
-        [HttpGet("create")]
-        public async Task<Question> Create([FromQuery] QuestionModel Model)
+        [HttpPost("create")]
+        public async Task<Question> Create([FromBody] QuestionModel Model)
         {
-            return await _questionService.Create(Model);
+            var userId = string.Empty;
+            var role = string.Empty;
+            if (HttpContext.User.Identity is ClaimsIdentity identity)
+            {
+                userId = identity.FindFirst(ClaimTypes.Name)?.Value;
+                role = identity.FindFirst(ClaimTypes.Role)?.Value;
+            }
+            return await _questionService.Create(Model, userId);
         }
-        [HttpPost("get_list_question")]
+        [HttpGet("get-list-question")]
         public IActionResult GetByLessonId(string id)
         {
             return Ok( _questionService.GetById(id));

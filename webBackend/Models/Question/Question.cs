@@ -2,9 +2,6 @@
 using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using webBackend.Models.Answer;
 
 namespace webBackend.Models.Question
 {
@@ -17,17 +14,17 @@ namespace webBackend.Models.Question
         public string GroupId { get; set; }
         public string Content { get; set; }
         public DateTime CreateAt { get; set; }
-        public List<Answern> Answers { get; set; }
+        public List<webBackend.Models.Answer.Answer> Answers { get; set; }
         public Question()
         {
-            this.Answers = new List<Answern>();
+            this.Answers = new List<webBackend.Models.Answer.Answer>();
         }
     }
     public class QuestionModel
     {
         public string LessonId { get; set; }
-        public string GroupId { get; set; }
         public string Content { get; set; }
+        public string ClassId { get; set; }
      
     }
     public class QuestionResult
@@ -38,7 +35,7 @@ namespace webBackend.Models.Question
         public string GroupName { get; set; }
         public string Content { get; set; }
         public DateTime CreateAt { get; set; }
-        public List<Answern> Answers { get; set; }
+        public List<webBackend.Models.Answer.Answer> Answers { get; set; }
        
     }
     public class ResultQuestion

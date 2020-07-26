@@ -61,22 +61,5 @@ namespace webBackend.Controllers
             List<Issue> issues = _issueService.GetByChapterID(id);
             return Ok(issues);
         }
-        [HttpPost("create-answer")]
-        public async Task<IActionResult> CreateAnswer(string issueId,string conten)
-        {
-            AnswerModel answern = new AnswerModel();
-            var issue = _issueService.GetId(issueId);
-            if(issue==null)
-            {
-                return BadRequest();
-            }
-            answern.Content = conten;
-            answern.IssueId = issue.Id;
-            answern.UserId = issue.UserId;
-            await _answerService.Create(answern);
-            return Ok(answern);
-
-        }
-
     }
 }

@@ -9,8 +9,7 @@ namespace webBackend.Models.Answer
 {
     public class AnswerModel
     {
-        public string GroupId { get; set; }
         public string Content { get; set; }
-        public string UserName { get; set; }
+        public string QuestionId { get; set; }
     }
 }
