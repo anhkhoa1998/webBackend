@@ -13,8 +13,7 @@ namespace webBackend.Models.Class
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
         public string Name { get; set; }
-        public string Code { get; set; }
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string TeacherId { get; set; }
+        public string No { get; set; }
+        public List<webBackend.Models.User.User> TeacherId { get; set; }
     }
 }

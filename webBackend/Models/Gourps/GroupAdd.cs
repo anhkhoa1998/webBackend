@@ -12,6 +12,7 @@ namespace webBackend.Models.Group
 
         public string Name { get; set; }
         public List<string> IdUser { get; set; }
+        public string ClassId { get; set; }
         public GroupAdd() { this.IdUser = new List<string>(); }
     }
 }

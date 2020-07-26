@@ -21,6 +21,10 @@ namespace webBackend.Controllers
         [HttpPost]
         public IActionResult Create(GroupAdd group)
         {
+            if(string.IsNullOrEmpty(group.Name)|| string.IsNullOrEmpty(group.ClassId)||group.IdUser.Count==0)
+            {
+                return BadRequest("input null!!!!");
+            }
             _groupService.Create(group);
             return Ok();
         }

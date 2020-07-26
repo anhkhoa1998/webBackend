@@ -12,8 +12,9 @@ namespace webBackend.Models.Lesson
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
-        public int No { get; set; }
+        
         public string Name { get; set; }
+        public string Content { get; set; }
         public string ClassId { get; set; }
     }
 }

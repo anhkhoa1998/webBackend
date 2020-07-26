@@ -22,11 +22,12 @@ namespace webBackend.Services
         Groups GetById(string id);
         Groups InsertUser(string UserId, string GroupId);
         void Update(string id,Groups groups);
+        Groups Get(string id);
     }
     public class GroupService : IGroupService
     {
         private readonly IMongoCollection<Groups> _group;
-            private readonly IMongoCollection<Users> _users;
+        private readonly IMongoCollection<webBackend.Models.User.User> _users;
         private readonly IMongoDatabase database;
         private readonly IMapper _mapper;
         public GroupService(AppSettings settings, IMapper mapper)
@@ -35,12 +36,12 @@ namespace webBackend.Services
             database = client.GetDatabase(settings.DatabaseName);
 
             _group = database.GetCollection<Groups>(settings.GroupsCollectionName);
-            _users = database.GetCollection<Users>(settings.UsersCollectionName);
+            _users = database.GetCollection<webBackend.Models.User.User>(settings.UsersCollectionName);
             _mapper = mapper;
         }
         public Groups Create(GroupAdd group)
         {
-            List<Users> users = new List<Users>();
+            List<webBackend.Models.User.User> users = new List<webBackend.Models.User.User>();
             
             foreach(string userId in group.IdUser)
             {
@@ -48,6 +49,8 @@ namespace webBackend.Services
             }
             var groups = new Groups();
             groups.ListUser = users;
+            groups.Name = group.Name;
+            groups.ClassId = group.ClassId;
             _group.InsertOne(groups);
             return groups;
         }
@@ -56,7 +59,7 @@ namespace webBackend.Services
             Groups groups = this.GetById(GroupId);
             if(!groups.ListUser.Any(x=>x.Id==UserId))
             {
-                Users users = _users.Find(u => u.Id == UserId).FirstOrDefault();
+                webBackend.Models.User.User users = _users.Find(u => u.Id == UserId).FirstOrDefault();
                 groups.ListUser.Add(users);
                 this.Update(groups.Id, groups);
                 return groups;
@@ -70,7 +73,7 @@ namespace webBackend.Services
             Groups groups = this.GetById(groupId);
             if (groups.ListUser.Any(x => x.Id == userID))
             {
-                Users users = _users.Find(u => u.Id == userID).FirstOrDefault();
+                webBackend.Models.User.User users = _users.Find(u => u.Id == userID).FirstOrDefault();
                 groups.ListUser.Remove(users);
                 this.Update(groups.Id, groups);
                 return groups;
@@ -85,6 +88,11 @@ namespace webBackend.Services
         public List<Groups> Get()
         {
             var listGroups = _group.Find(x => true).ToList();
+            return listGroups;
+        }
+        public Groups Get(string id)
+        {
+            var listGroups = _group.Find(x => x.Id==id).FirstOrDefault();
             return listGroups;
         }
         public Groups GetById(string id)
