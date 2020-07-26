@@ -43,7 +43,7 @@ namespace webBackend.Controllers
             var chapter = await _chapterService.Delete(id);
             return chapter;
         }
-        [HttpGet("getlist")]
+        [HttpGet("get-list-chapter")]
         public IActionResult GetListByLessonId(string id)
         {
             List<Chapter> list = _chapterService.GetListByLessonId(id);

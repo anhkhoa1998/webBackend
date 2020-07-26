@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +27,14 @@ namespace webBackend.Controllers
         [HttpPost("create")]
         public async Task<Issue> Create([FromQuery] IssueModel issueModel)
         {
+            var userId = string.Empty;
+            var role = string.Empty;
+            if (HttpContext.User.Identity is ClaimsIdentity identity)
+            {
+                userId = identity.FindFirst(ClaimTypes.Name)?.Value;
+                role = identity.FindFirst(ClaimTypes.Role)?.Value;
+            }
+            issueModel.UserId = userId;
             return await _issueService.Create(issueModel);
         }
         [HttpGet("get")]
@@ -46,14 +55,14 @@ namespace webBackend.Controllers
             var issue = await _issueService.Delete(id);
             return issue;
         }
-        [HttpGet("getbylist")]
+        [HttpGet("get-list-issue")]
         public IActionResult GetByChapterID(string id)
         {
             List<Issue> issues = _issueService.GetByChapterID(id);
             return Ok(issues);
         }
-        [HttpPost("createanswer")]
-        public IActionResult CreateAnser(string issueId,string conten)
+        [HttpPost("create-answer")]
+        public async Task<IActionResult> CreateAnswer(string issueId,string conten)
         {
             AnswerModel answern = new AnswerModel();
             var issue = _issueService.GetId(issueId);
@@ -64,7 +73,7 @@ namespace webBackend.Controllers
             answern.Content = conten;
             answern.IssueId = issue.Id;
             answern.UserId = issue.UserId;
-            _answerService.Create(answern);
+            await _answerService.Create(answern);
             return Ok(answern);
 
         }

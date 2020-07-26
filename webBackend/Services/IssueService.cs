@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using webBackend.Models;
 using webBackend.Models.Issue;
+using webBackend.Models.User;
 
 namespace webBackend.Services
 {
@@ -19,6 +20,7 @@ namespace webBackend.Services
     public class IssueService
     {
         private readonly IMongoCollection<Issue> _issues;
+        private readonly IMongoCollection<User> _users;
         private readonly IMongoDatabase database;
         private readonly IMapper _mapper;
 
@@ -28,6 +30,7 @@ namespace webBackend.Services
             database = client.GetDatabase(settings.DatabaseName);
 
             _issues = database.GetCollection<Issue>(settings.IssuesCollectionName);
+            _users = database.GetCollection<User>(settings.UsersCollectionName);
             _mapper = mapper;
         }
         public Issue GetId(string id)
@@ -40,6 +43,8 @@ namespace webBackend.Services
         }
         public async Task<Issue> Create(IssueModel issueModel)
         {
+            var user = _users.Find(u => u.Id == issueModel.UserId).FirstOrDefault();
+            issueModel.UserName = user.FirstName + ' ' + user.LastName;
             var issue = _mapper.Map<Issue>(issueModel);
             await _issues.InsertOneAsync(issue);
             return issue;

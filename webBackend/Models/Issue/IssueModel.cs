@@ -9,11 +9,10 @@ namespace webBackend.Models.Issue
 {
     public class IssueModel
     {
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string ClassId { get; set; }
         public string Question { get; set; }
         public string ChapterId { get; set; }
         [BsonRepresentation(BsonType.ObjectId)]
         public string UserId { get; set; }
+        public string UserName { get; set; }
     }
 }

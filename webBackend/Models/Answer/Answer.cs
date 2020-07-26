@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace webBackend.Models.Answer
 {
-    public class Answern
+    public class Answer
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
@@ -16,6 +16,7 @@ namespace webBackend.Models.Answer
         public string IssueId { get; set; }
         [BsonRepresentation(BsonType.ObjectId)]
         public string UserId { get; set; }
+        public string UserName { get; set; }
         public string Content { get; set; }
     }
 }

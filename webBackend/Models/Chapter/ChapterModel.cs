@@ -10,6 +10,7 @@ namespace webBackend.Models.Chapter
         public string Theory { get; set; }
         public string Code { get; set; }
         public int No { get; set; }
+        public string Name { get; set; }
         public string LessonId { get; set; }
     }
 }

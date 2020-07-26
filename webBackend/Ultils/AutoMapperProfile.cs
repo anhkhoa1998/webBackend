@@ -31,8 +31,8 @@ namespace webBackend.Ultils
             CreateMap<IssueModel, Issue>();
             CreateMap<IssueUpdateModel, Issue>();
 
-            CreateMap<AnswerModel, Answern>();
-            CreateMap<AnswerUpdateModel, Answern>();
+            CreateMap<AnswerModel, Answer>();
+            CreateMap<AnswerUpdateModel, Answer>();
         }
     }
 }

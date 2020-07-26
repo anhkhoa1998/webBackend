@@ -14,6 +14,7 @@ namespace webBackend.Models.Chapter
         public string Id { get; set; }
         public string Theory { get; set; }
         public string Code { get; set; }
+        public string Name { get; set; }
         public int No { get; set; }
         [BsonRepresentation(BsonType.ObjectId)]
         public string LessonId { get; set; }

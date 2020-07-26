@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,12 +22,20 @@ namespace webBackend.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<Answern> Create([FromQuery] AnswerModel answerModel)
+        public async Task<Answer> Create([FromQuery] AnswerModel answerModel)
         {
+            var userId = string.Empty;
+            var role = string.Empty;
+            if (HttpContext.User.Identity is ClaimsIdentity identity)
+            {
+                userId = identity.FindFirst(ClaimTypes.Name)?.Value;
+                role = identity.FindFirst(ClaimTypes.Role)?.Value;
+            }
+            answerModel.UserId = userId;
             return await _answerService.Create(answerModel);
         }
         [HttpGet("get")]
-        public async Task<Answern> Get(string id)
+        public async Task<Answer> Get(string id)
         {
             var answer = await _answerService.GetById(id);
             return answer;
@@ -38,15 +47,15 @@ namespace webBackend.Controllers
             return answer;
         }
         [HttpDelete("delete")]
-        public async Task<Answern> Delete(string id)
+        public async Task<Answer> Delete(string id)
         {
             var answer = await _answerService.Delete(id);
             return answer;
         }
-        [HttpGet("gelist")]
-        public IActionResult GetByIssueId(string id)
+        [HttpGet("get-qanda")]
+        public IActionResult GetQAndAModel(string chapterId)
         {
-            List<Answern> answerns = _answerService.GetListByIssueId(id);
+            var answerns = _answerService.GetListQuestionAndAnswer(chapterId);
             return Ok(answerns);
         }
     }

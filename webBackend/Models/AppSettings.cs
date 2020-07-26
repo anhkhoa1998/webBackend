@@ -8,6 +8,7 @@
         public string IssuesCollectionName { get; set; }
         public string LessonsCollectionName { get; set; }
         public string ChaptersCollectionName { get; set; }
+        public string ProjectsCollectionName { get; set; }
         public string GroupsCollectionName { get; set; }
         public string ConnectionString { get; set; }
         public string DatabaseName { get; set; }
@@ -22,6 +23,7 @@
         string IssuesCollectionName { get; set; }
         string LessonsCollectionName { get; set; }
         string ChaptersCollectionName { get; set; }
+        string ProjectsCollectionName { get; set; }
         string ConnectionString { get; set; }
         string DatabaseName { get; set; }
         string Secret { get; set; }

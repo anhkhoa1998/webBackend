@@ -43,7 +43,7 @@ namespace webBackend.Controllers
             var lesson = await _lessonService.Delete(id);
             return lesson;
         }
-        [HttpGet("getlistlesson")]
+        [HttpGet("get-list-lesson")]
         public ActionResult GetListByClassId(string id)
         {
             List<Lesson> lessons =  _lessonService.GetByClassId(id);
