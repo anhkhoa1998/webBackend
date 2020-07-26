@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -6,26 +7,25 @@ using System.Linq;
 using System.Threading.Tasks;
 using webBackend.Models;
 using webBackend.Models.Answer;
-using webBackend.Models.Issue;
-using webBackend.Models.ResultModel;
-using webBackend.Models.User;
+using webBackend.Models.Group;
+using webBackend.Models.Question;
 
 namespace webBackend.Services
 {
     public interface IAnswerService
     {
-        Task<Answer> GetById(string id);
-        Task<Answer> Create(AnswerModel answerModel);
+        Task<Answern> GetById(string id);
+        Task<Answern> Create(AnswerModel answerModel, string questionId);
         Task<AnswerUpdateModel> Update(string id, AnswerUpdateModel p);
-        Task<Answer> Delete(string id);
-        List<Answer> GetListByIssueId(string id);
-        List<QandAModel> GetListQuestionAndAnswer(string chapterId);
+        Task<Answern> Delete(string id);
+        List<Answern> GetListByIssueId(string id);
+        ResultAnswers CountAnser(string groupid);
     }
     public class AnswerService : IAnswerService
     {
-        private readonly IMongoCollection<Answer> _answers;
-        private readonly IMongoCollection<Issue> _issues;
-        private readonly IMongoCollection<User> _users;
+        private readonly IMongoCollection<Answern> _answers;
+        private readonly IMongoCollection<Question> _question;
+        private readonly IMongoCollection<Groups> _group;
         private readonly IMongoDatabase database;
         private readonly IMapper _mapper;
 
@@ -34,21 +34,31 @@ namespace webBackend.Services
             var client = new MongoClient(settings.ConnectionString);
             database = client.GetDatabase(settings.DatabaseName);
 
-            _answers = database.GetCollection<Answer>(settings.AnswersCollectionName);
-            _issues = database.GetCollection<Issue>(settings.IssuesCollectionName);
-            _users = database.GetCollection<User>(settings.UsersCollectionName);
+            _answers = database.GetCollection<Answern>(settings.AnswersCollectionName);
+            _group = database.GetCollection<Groups>(settings.GroupsCollectionName);
+            _question = database.GetCollection<Question>(settings.QuestionCollectionName);
             _mapper = mapper;
         }
         public Task<Answer> GetById(string id)
         {
             return _answers.Find(c => c.Id == id).FirstOrDefaultAsync();
         }
-        public async Task<Answer> Create(AnswerModel answerModel)
+        public async Task<Answern> Create(AnswerModel answerModel,string questionId)
         {
-            var user = _users.Find(u => u.Id == answerModel.UserId).FirstOrDefault();
-            answerModel.UserName = user.FirstName + ' ' + user.LastName;
-            var answer = _mapper.Map<Answer>(answerModel);
+            Answern answer = new Answern();
+            answer.Content = answerModel.Content;
+            answer.GroupId = answerModel.GroupId;
+            answer.CreateAt = DateTime.Now;
             await _answers.InsertOneAsync(answer);
+            Question question = new Question();
+            question= _question.Find(q => q.Id == questionId).FirstOrDefault();
+            if(question.Answers==null)
+            {
+                question.Answers = new List<Answern>();
+            }
+           
+            question.Answers.Add(answer);
+            _question.ReplaceOne(q => q.Id == questionId, question);
             return answer;
         }
         public async Task<AnswerUpdateModel> Update(string id, AnswerUpdateModel p)
@@ -66,20 +76,17 @@ namespace webBackend.Services
         }
         public List<Answer> GetListByIssueId(string id)
         {
-            List<Answer> answerns = _answers.Find(x => x.IssueId == id).ToList();
+            List<Answern> answerns = _answers.Find(x =>true).ToList();
             return answerns;
         }
-        public List<QandAModel> GetListQuestionAndAnswer(string chapterId)
+        public ResultAnswers CountAnser(string groupid)
         {
-            var listResult = new List<QandAModel>();
-            var issues = _issues.Find(i => i.ChapterId == chapterId).ToList();
-            foreach(var item in issues)
-            {
-                var listAnswers = _answers.Find(a => a.IssueId == item.Id).ToList();
-                listResult.Add(new QandAModel { issue = item, Answers = listAnswers });
-            }
-
-            return listResult;
+            ResultAnswers result = new ResultAnswers();
+            var ans = _answers.Find(q => q.GroupId == groupid).ToList();
+            result.Count = ans.Count;
+            var group = _group.Find(g => g.Id == groupid).FirstOrDefault();
+            result.Name = group.Name;
+            return result;
         }
     }
 }

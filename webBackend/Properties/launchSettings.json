@@ -1,18 +1,16 @@
-﻿{
-  "$schema": "http://json.schemastore.org/launchsettings.json",
+{
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:54467",
-      "sslPort": 44329
+      "applicationUrl": "http://localhost:63118/",
+      "sslPort": 44306
     }
   },
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "index.html",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -20,11 +18,10 @@
     "webBackend": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "index.html",
-      "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "https://localhost:5001;http://localhost:5000"
     }
   }
 }

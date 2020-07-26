@@ -23,8 +23,8 @@ namespace webBackend.Services
         User Authenticate(AuthenModel authenModel);
         Task<UserUpdateModel> Update(string id, UserUpdateModel p);
         Task<User> Delete(string id);
-        Task<List<string>> GetListClass(string id);
-        Task<UserInformation> GetUserInformation(string userId);
+       // Task<List<string>> GetListClass(string id);
+        //Task<UserInformation> GetUserInformation(string userId);
 
     }
     public class UserServices : IUserServices
@@ -90,19 +90,19 @@ namespace webBackend.Services
             await _user.DeleteOneAsync(p => p.Id == id);
             return user;
         }
-        public async Task<List<string>> GetListClass(string id)
-        {
-            var user = await _user.Find(u => u.Id == id).FirstOrDefaultAsync();
-            return user.ListClass;
-        }
+        //public async Task<List<string>> GetListClass(string id)
+        //{
+        //    var user = await _user.Find(u => u.Id == id).FirstOrDefaultAsync();
+        //    return user.ListClass;
+        //}
 
-        public async Task<UserInformation> GetUserInformation(string userId)
-        {
-            var user = await _user.Find(u => u.Id == userId).FirstOrDefaultAsync();
-            var result = new UserInformation { FirstName = user.FirstName, LastName = user.LastName, ListClass = user.ListClass };
+        //public async Task<UserInformation> GetUserInformation(string userId)
+        //{
+        //    var user = await _user.Find(u => u.Id == userId).FirstOrDefaultAsync();
+        //    var result = new UserInformation { FirstName = user.FirstName, LastName = user.LastName, ListClass = user.ListClass };
 
 
-            return result;
-        }
+        //    return result;
+        //}
     }
 }

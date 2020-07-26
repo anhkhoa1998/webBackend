@@ -57,7 +57,6 @@ namespace webBackend.Services
         public List<Lesson> GetByClassId(string id)
         {
             List<Lesson> list =  _lesson.Find(b => b.ClassId == id).ToList();
-            list.OrderBy(b => b.No);
             return list;
 
         }

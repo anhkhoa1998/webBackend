@@ -8,8 +8,8 @@ namespace webBackend.Models.Class
     public class ClassModel
     {
         public string Name { get; set; }
-        public string Code { get; set; }
+        public string No { get; set; }
         [BsonRepresentation(BsonType.ObjectId)]
-        public string TeacherId { get; set; }
+        public List<string> TeacherId { get; set; }
     }
 }

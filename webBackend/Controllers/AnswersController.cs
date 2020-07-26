@@ -15,24 +15,18 @@ namespace webBackend.Controllers
     public class AnswersController : ControllerBase
     {
         private readonly AnswerService _answerService;
+        private readonly GroupService _groupService;
 
-        public AnswersController(AnswerService answerService)
+        public AnswersController(AnswerService answerService, GroupService groupService)
         {
             _answerService = answerService;
+            _groupService = groupService;
         }
 
         [HttpPost("create")]
-        public async Task<Answer> Create([FromQuery] AnswerModel answerModel)
+        public async Task<Answern> Create([FromQuery] AnswerModel answerModel,string id)
         {
-            var userId = string.Empty;
-            var role = string.Empty;
-            if (HttpContext.User.Identity is ClaimsIdentity identity)
-            {
-                userId = identity.FindFirst(ClaimTypes.Name)?.Value;
-                role = identity.FindFirst(ClaimTypes.Role)?.Value;
-            }
-            answerModel.UserId = userId;
-            return await _answerService.Create(answerModel);
+            return await _answerService.Create(answerModel,id);
         }
         [HttpGet("get")]
         public async Task<Answer> Get(string id)
@@ -52,11 +46,20 @@ namespace webBackend.Controllers
             var answer = await _answerService.Delete(id);
             return answer;
         }
-        [HttpGet("get-qanda")]
-        public IActionResult GetQAndAModel(string chapterId)
+        [HttpGet("get-list-answer")]
+        public IActionResult GetByLessonId(string id)
         {
             var answerns = _answerService.GetListQuestionAndAnswer(chapterId);
             return Ok(answerns);
+        }
+        [HttpGet("count-answer")]
+        public IActionResult GetCount(string groupId)
+        {
+            if (_groupService.Get(groupId) == null)
+            {
+                return BadRequest("Can't find group");
+            }
+            return Ok(_answerService.CountAnser(groupId));
         }
     }
 }
