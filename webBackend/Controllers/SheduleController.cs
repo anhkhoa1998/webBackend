@@ -32,5 +32,10 @@ namespace webBackend.Controllers
             _scheduleService.Delete(ScheduleId);
             return Ok();
         }
+        [HttpGet]
+        public IActionResult Get(string id)
+        {
+            return Ok(_scheduleService.GetById(id));
+        }
     }
 }

@@ -16,6 +16,7 @@ namespace webBackend.Services
     {
         GroupShedule Create(GroupSheduleModel groupSheduleModel);
         void Delete(string groupSheduleModel);
+        GroupShedule GetById(string id);
 
 
     }
@@ -31,6 +32,11 @@ namespace webBackend.Services
 
             _groupShedule = database.GetCollection<GroupShedule>(settings.ScheduleCollectionName);
             _mapper = mapper;
+        }
+        public GroupShedule GetById(string id)
+        {
+            var schedule = _groupShedule.Find(g => g.GroupId == id).FirstOrDefault();
+            return schedule;
         }
         public GroupShedule Create(GroupSheduleModel groupSheduleModel)
         {
