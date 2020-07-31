@@ -10,6 +10,7 @@ namespace webBackend.Models
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
+        public string ClassId { get; set; }
         public List<string> Todo { get; set; }
         public List<WorkingModel> Work { get; set; }
 

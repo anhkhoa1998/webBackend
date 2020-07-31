@@ -21,11 +21,11 @@ namespace webBackend.Controllers
             _working = group;
         }
         [HttpPost]
-        public IActionResult Create(List<string> Todo)
+        public IActionResult Create(List<string> Todo, string ClassId)
         {
 
 
-            return Ok(_working.Creaate(Todo));
+            return Ok(_working.Creaate(Todo,ClassId));
         }
         [HttpPost("WorkingModel")]
         public IActionResult CreateWorkingModel(string WorkingId, Work work)

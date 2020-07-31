@@ -14,7 +14,7 @@ namespace webBackend.Services
 {
     public interface IGroupService
     {
-        Working Creaate(List<string> Todo);
+         Working Creaate(List<string> Todo, string ClassId);
         Working CreaateWorkingModel(string Id, Work workingModels);
         WorkingModelResult WorkingModelResult(string UserId, string WorkingId, int WorkingModelId);
 
@@ -34,10 +34,11 @@ namespace webBackend.Services
             _users = database.GetCollection<webBackend.Models.User.User>(settings.UsersCollectionName);
             _mapper = mapper;
         }
-        public Working Creaate(List<string> Todo)
+        public Working Creaate(List<string> Todo, string ClassId)
         {
             var working = new Working();
             working.Todo = Todo;
+            working.ClassId = ClassId;
             _working.InsertOne(working);
             return working;
         }
