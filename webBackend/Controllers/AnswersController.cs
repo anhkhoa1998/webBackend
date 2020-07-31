@@ -14,18 +14,18 @@ namespace webBackend.Controllers
     public class AnswersController : ControllerBase
     {
         private readonly AnswerService _answerService;
-        private readonly GroupService _groupService;
+        private readonly WorkingService _groupService;
 
-        public AnswersController(AnswerService answerService, GroupService groupService)
+        public AnswersController(AnswerService answerService, WorkingService groupService)
         {
             _answerService = answerService;
             _groupService = groupService;
         }
 
         [HttpPost("create")]
-        public async Task<Answern> Create([FromQuery] AnswerModel answerModel,string id)
+        public async Task<Answern> Create([FromQuery] AnswerModel answerModel, string id)
         {
-            return await _answerService.Create(answerModel,id);
+            return await _answerService.Create(answerModel, id);
         }
         [HttpGet("get")]
         public async Task<Answern> Get(string id)
@@ -51,14 +51,14 @@ namespace webBackend.Controllers
             List<Answern> answerns = _answerService.GetListByIssueId(id);
             return Ok(answerns);
         }
-        [HttpGet("count-answer")]
-        public IActionResult GetCount(string groupId)
-        {
-            if (_groupService.Get(groupId) == null)
-            {
-                return BadRequest("Can't find group");
-            }
-            return Ok(_answerService.CountAnser(groupId));
-        }
+        //[HttpGet("count-answer")]
+        //public IActionResult GetCount(string groupId)
+        //{
+        //    if (_groupService.Get(groupId) == null)
+        //    {
+        //        return BadRequest("Can't find group");
+        //    }
+        //    return Ok(_answerService.CountAnser(groupId));
+        //}
     }
 }

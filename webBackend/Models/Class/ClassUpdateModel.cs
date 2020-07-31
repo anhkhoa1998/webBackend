@@ -10,8 +10,8 @@ namespace webBackend.Models.Class
     public class ClassUpdateModel
     {
         public string Name { get; set; }
-        public string Code { get; set; }
-        [BsonRepresentation(BsonType.ObjectId)]
+        public string No { get; set; }
+        public List<string> UsersId { get; set; }
         public string TeacherId { get; set; }
     }
 }

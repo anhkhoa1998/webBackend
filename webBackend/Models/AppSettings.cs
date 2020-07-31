@@ -12,12 +12,16 @@
         public string ConnectionString { get; set; }
         public string DatabaseName { get; set; }
         public string Secret { get; set; }
+        public string WorkingCollectionName { get; set; }
         public string ScheduleCollectionName { get; set; }
         public string QuestionCollectionName { get; set; }
+        public string ImageCollectionName { get; set; }
     }
     public interface IAppSettings
     {
         string QuestionCollectionName { get; set; }
+        string ImageCollectionName { get; set; }
+        string WorkingCollectionName { get; set; }
         string ScheduleCollectionName { get; set; }
         string GroupsCollectionName { get; set; }
         string UsersCollectionName { get; set; }

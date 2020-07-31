@@ -14,6 +14,7 @@ namespace webBackend.Models.Class
         public string Id { get; set; }
         public string Name { get; set; }
         public string No { get; set; }
-        public List<webBackend.Models.User.User> TeacherId { get; set; }
+        public List<string> ListUser { get; set; }
+        public string TeacherId { get; set; }
     }
 }

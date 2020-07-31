@@ -10,6 +10,7 @@ namespace webBackend.Models.Class
         public string Name { get; set; }
         public string No { get; set; }
         [BsonRepresentation(BsonType.ObjectId)]
-        public List<string> TeacherId { get; set; }
+        public string TeacherId { get; set; }
+        public List<string> UsrId { get; set; }
     }
 }

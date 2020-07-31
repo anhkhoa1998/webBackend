@@ -15,9 +15,9 @@ namespace webBackend.Controllers
     public class QuestionController : ControllerBase
     {
         private readonly QuestionService _questionService;
-        private readonly GroupService _groupService;
+        private readonly WorkingService _groupService;
 
-        public QuestionController(QuestionService questionService,GroupService groupService)
+        public QuestionController(QuestionService questionService,WorkingService groupService)
         {
             _questionService = questionService;
             _groupService = groupService;
@@ -33,14 +33,14 @@ namespace webBackend.Controllers
         {
             return Ok( _questionService.GetById(id));
         }
-        [HttpGet("count-question")]
-        public IActionResult GetCount(string groupId)
-        {
-            if(_groupService.Get(groupId)==null)
-            {
-                return BadRequest("Can't find group");
-            }
-            return Ok(_questionService.CountQuestion(groupId));
-        }
+        //[HttpGet("count-question")]
+        //public IActionResult GetCount(string groupId)
+        //{
+        //    if(_groupService.Get(groupId)==null)
+        //    {
+        //        return BadRequest("Can't find group");
+        //    }
+        //    return Ok(_questionService.CountQuestion(groupId));
+        //}
     }
 }

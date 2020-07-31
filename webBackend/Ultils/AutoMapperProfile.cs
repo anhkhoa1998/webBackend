@@ -20,7 +20,7 @@ namespace webBackend.Ultils
         {
             CreateMap<UserModel, User>();
             CreateMap<UserUpdateModel, User>();
-            CreateMap<Groups, GroupResult>();
+          //  CreateMap<Groups, GroupResult>();
             CreateMap<ClassModel, Class>();
             CreateMap<ClassUpdateModel, Class>();
             CreateMap<Class, ClassResult>();

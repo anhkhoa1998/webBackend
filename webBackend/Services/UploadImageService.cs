@@ -1,19 +1,44 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using MongoDB.Driver;
 using MongoDB.Driver.GridFS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using webBackend.Models;
+using webBackend.Models.Answer;
+using webBackend.Models.Group;
+using webBackend.Models.User;
 
 namespace webBackend.Services
 {
-    public class UploadImageService
+    public interface IUploadImageServiceService
     {
+
+        Image Upload(Imagemodel imagemodel);
+    }
+    public class UploadImageService : IUploadImageServiceService
+    {
+        private readonly IMongoCollection<Image> _image;
         private GridFSBucket bucket;
-        public Image image { get; set; }
-        public UploadImageService(Imagemodel imagemodel)
+        private readonly IMongoCollection<webBackend.Models.User.User> _users;
+        private readonly IMongoDatabase database;
+        private readonly IMapper _mapper;
+        public UploadImageService(AppSettings settings, IMapper mapper)
         {
-            if(imagemodel.Files!=null)
+            var client = new MongoClient(settings.ConnectionString);
+            database = client.GetDatabase(settings.DatabaseName);
+
+            _image = database.GetCollection<Image>(settings.ImageCollectionName);
+            _users = database.GetCollection<webBackend.Models.User.User>(settings.UsersCollectionName);
+            _mapper = mapper;
+        }
+        public Image Upload(Imagemodel imagemodel)
+        {
+            Image image = new Image();
+            if (imagemodel.Files != null)
             {
                 var index = 1;
                 foreach (var file in imagemodel.Files)
@@ -23,34 +48,15 @@ namespace webBackend.Services
                     index++;
                 }
             }
-            var ThumbnailId = UploadedFile(imagemodel.ThumbnailImg.FileName, imagemodel.ThumbnailImg);
-            image.ThumbnailId = ThumbnailId;
+            _image.InsertOne(image);
+            return image;
         }
-        public  string UploadedFile(int index, IFormFile file)
+        public string UploadedFile(int index, IFormFile file)
         {
             var path = file.OpenReadStream();
             var id = bucket.UploadFromStream(index.ToString(), path);
 
             return id.ToString();
         }
-        public string UploadedFile(string fileName, IFormFile file)
-        {
-            var path = file.OpenReadStream();
-            var id = bucket.UploadFromStream(fileName, path);
-
-            return id.ToString();
-        }
-
     }
-    public class Imagemodel
-    {
-        public IFormFile[] Files { get; set; }
-        public IFormFile ThumbnailImg { get; set; }
-    }
-    public class Image
-    {
-        public List<string> Pictures { get; set; }
-        public string ThumbnailId { get; set; }
-    }
-   
 }

@@ -68,8 +68,9 @@ namespace webBackend
             services.AddSingleton<ChapterService>();
             services.AddSingleton<IssueService>();
             services.AddSingleton<AnswerService>();
-            services.AddSingleton<GroupService>();
+            services.AddSingleton<WorkingService>();
             services.AddSingleton<QuestionService>();
+            services.AddSingleton<StoreImage>();
             services.AddSingleton<ScheduleService>();
             services.AddSwaggerGen(c =>
             {

@@ -45,17 +45,12 @@ namespace webBackend.Services
             return _classes.Find(c => c.Id == id).FirstOrDefaultAsync();
         }
         public async Task<Class> Create(ClassModel classModel)
-        {
-            List<webBackend.Models.User.User> users = new List<webBackend.Models.User.User>();
-
-            foreach (string userId in classModel.TeacherId)
-            {
-                users.Add(_users.Find(u => u.Id == userId).FirstOrDefault());
-            }
+        {       
             var c = new Class();
             c.Name = classModel.Name;
             c.No = classModel.No;
-            c.TeacherId = users;
+            c.TeacherId = classModel.TeacherId;
+            c.ListUser = classModel.UsrId;
             _classes.InsertOne(c);
             return c;
 
@@ -77,38 +72,29 @@ namespace webBackend.Services
         {
             var user = _users.Find(u => u.Id == userId).FirstOrDefault();
 
-            var groups = _groups.Find(g =>true).ToList();
-            List<Groups> Listgroups = new List<Groups>();
-            foreach(Groups item in groups)
-            {
-                for(int i=0;i<item.ListUser.Count;i++)
-                {
-                    if(item.ListUser[i].Id==userId)
-                    {
-                        Listgroups.Add(item);
-                    }
-                }
-            }
-            var groupResults = _mapper.Map<List<Groups>, List<GroupResult>>(Listgroups);
-            List<string> classId = new List<string>();
-            foreach(Groups item in Listgroups)
-            {
-                classId.Add(item.ClassId);
-            }
+            var Class = _classes.Find(g =>true).ToList();
             List<ClassResult> classResults = new List<ClassResult>();
-            foreach(string id in classId)
+           foreach (Class item in Class)
             {
-                Class c = _classes.Find(c => c.Id == id).FirstOrDefault();
-                var temp = _mapper.Map<ClassResult>(c);
-                classResults.Add(temp);
-            }
+                foreach(string userid in item.ListUser)
+                {
+                    if(userid==userId)
+                    {
+                        var c = _classes.Find(x => x.Id == item.Id).FirstOrDefault();
+                        ClassResult classResult = new ClassResult();
+                        classResult.Name = c.Name;
+                        classResult.Id = c.Id;
+                        classResult.No = c.No;
+                        classResults.Add(classResult);
+                    }    
+                }    
+            }    
             UserInformationResult userInformation = new UserInformationResult();
             userInformation.Id = user.Id;
             userInformation.UserName = user.Username;
             userInformation.FirstName = user.FirstName;
             userInformation.LastName = user.LastName;
-            userInformation.ClassResults = classResults;
-            userInformation.GroupResults = groupResults;
+            userInformation.ListClass = classResults;
             return userInformation;
 
 
