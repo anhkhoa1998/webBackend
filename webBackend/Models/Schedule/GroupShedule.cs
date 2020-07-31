@@ -13,6 +13,7 @@ namespace webBackend.Models.Schedule
         public string Id { get; set; }
        public string GroupId { get; set; }
       public  List<SheduleDeatail> sheduleDeatails { get; set; }
+     
     }
     public class SheduleDeatail
         {
@@ -24,5 +25,6 @@ namespace webBackend.Models.Schedule
     {
         public List<SheduleDeatail> sheduleDeatails { get; set; }
         public string GroupId { get; set; }
+       
     }
 }
