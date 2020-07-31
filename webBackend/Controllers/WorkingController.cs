@@ -44,7 +44,7 @@ namespace webBackend.Controllers
                 userId = identity.FindFirst(ClaimTypes.Name)?.Value;
 
             }
-            return Ok(_working.WorkingModelResult("5f1d4a281609593b1cd92d71",
+            return Ok(_working.WorkingModelResult(userId,
                 WorkingId, WorkingModelId));
         }
     }
